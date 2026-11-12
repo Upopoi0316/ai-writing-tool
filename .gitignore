@@ -1,0 +1,12 @@
+.venv/
+.env
+__pycache__/
+*.pyc
+.pytest_cache/
+.DS_Store
+.streamlit/secrets.toml
+
+# 開発用のスキル(アプリ本体ではない)
+.claude/
+.agents/
+skills-lock.json

@@ -1,0 +1,54 @@
+/* st.download_button と見た目をそろえる。色と角丸はテーマの値を CSS 変数で受け取る */
+.copy {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.375rem;
+  /* 「コピー済み」に変わってもボタンの幅が変わらないようにする */
+  min-width: 7.5rem;
+  min-height: 2.5rem;
+  padding: 0.25rem 0.75rem;
+  border: 1px solid var(--st-border-color);
+  border-radius: var(--st-button-radius);
+  background: var(--st-secondary-background-color);
+  color: var(--st-text-color);
+  font: inherit;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+}
+
+.copy:hover {
+  background: rgba(210, 187, 142, 0.15);
+}
+
+.copy:focus-visible {
+  outline: 2px solid var(--st-primary-color);
+  outline-offset: 1px;
+}
+
+.icon {
+  width: 1.125rem;
+  height: 1.125rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* コピーの直後だけ、アイコンをチェックマークに替える */
+.icon-done,
+.copy.done .icon-copy {
+  display: none;
+}
+
+.copy.done .icon-done {
+  display: block;
+}
+
+.copy.done,
+.copy.failed {
+  border-color: var(--st-primary-color);
+  color: var(--st-primary-color);
+}

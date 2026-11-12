@@ -1,0 +1,34 @@
+[server]
+# 認証なしのアプリなので、自分の PC からのみアクセスできるようにする
+address = "localhost"
+
+[browser]
+gatherUsageStats = false
+
+[client]
+toolbarMode = "minimal"
+
+# 紙の原稿と朱色の校正ペンをイメージした配色
+[theme]
+base = "light"
+primaryColor = "#B4472E"
+backgroundColor = "#FBF9F4"
+secondaryBackgroundColor = "#FFFFFF"
+textColor = "#23211D"
+linkColor = "#B4472E"
+borderColor = "#DDD5C5"
+codeBackgroundColor = "#F7F4EC"
+showWidgetBorder = true
+showSidebarBorder = true
+baseRadius = "medium"
+font = "'Hiragino Sans', 'Hiragino Kaku Gothic ProN', 'Noto Sans JP', 'Yu Gothic UI', Meiryo, sans-serif"
+headingFont = "'Hiragino Mincho ProN', 'Yu Mincho', 'Noto Serif JP', serif"
+# 順に h1〜h6。st.header が h2、st.subheader が h3 になる
+headingFontSizes = ["1.75rem", "1.625rem", "1.0625rem", "1rem", "0.9375rem", "0.875rem"]
+# st.info の色。既定の青は紙の配色から浮くため、生成りの色にする
+blueBackgroundColor = "#F3EDE0"
+blueTextColor = "#5A4F3A"
+
+[theme.sidebar]
+backgroundColor = "#F4F0E7"
+secondaryBackgroundColor = "#FFFFFF"

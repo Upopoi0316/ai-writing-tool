@@ -1,0 +1,212 @@
+/* Streamlit のテーマ設定(.streamlit/config.toml)では指定できない部分だけをここで調整する */
+
+/* ページ全体: 横の余白を画面幅に合わせ、狭い画面でも本文の幅を確保する */
+[data-testid="stMainBlockContainer"] {
+  max-width: 1320px;
+  /* サイドバーを閉じると上部バー(高さ 60px)が不透明になるので、見出しの文字がその下に来る値にする */
+  padding-top: 3.25rem;
+  padding-inline: clamp(1.25rem, 4vw, 3.5rem);
+}
+
+/* サイドバーのロゴ: メインの見出しと高さをそろえる */
+[data-testid="stSidebarHeader"] {
+  margin-bottom: 0.1875rem;
+}
+
+[data-testid="stSidebar"] h2 {
+  padding-top: 0;
+  font-size: 1.25rem;
+}
+
+/* 補足文: 既定の半透明だと文字が薄く読みにくいので、不透明な色にする */
+[data-testid="stCaptionContainer"] {
+  opacity: 1;
+}
+
+[data-testid="stCaptionContainer"] p {
+  color: #6f695d;
+}
+
+[data-testid="stCaptionContainer"] a {
+  color: #b4472e;
+}
+
+/* サイドバーのツール一覧: ラジオボタンをナビゲーションの見た目にする */
+.st-key-tool-nav [data-testid="stElementContainer"],
+.st-key-tool-nav [data-testid="stRadio"],
+.st-key-tool-nav [data-testid="stRadioGroup"],
+.st-key-tool-nav [data-testid="stRadioGroup"] > div {
+  width: 100%;
+}
+
+.st-key-tool-nav [data-testid="stRadioGroup"] {
+  gap: 2px;
+}
+
+.st-key-tool-nav [data-testid="stRadioOption"] {
+  width: 100%;
+  margin: 0;
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+
+/* ラジオボタンの丸を隠す */
+.st-key-tool-nav [data-testid="stRadioOption"] > div > div:first-child {
+  display: none;
+}
+
+.st-key-tool-nav [data-testid="stRadioOption"]:hover {
+  background-color: rgba(35, 33, 29, 0.05);
+}
+
+.st-key-tool-nav [data-testid="stRadioOption"][data-selected="true"] {
+  background-color: #ffffff;
+  box-shadow: 0 1px 2px rgba(35, 33, 29, 0.12);
+}
+
+.st-key-tool-nav [data-testid="stRadioOption"][data-selected="true"] p {
+  color: #b4472e;
+  font-weight: 600;
+}
+
+/* キーボード操作時に、選択中の位置が分かるようにする */
+.st-key-tool-nav [data-testid="stRadioOption"]:has(input:focus-visible) {
+  outline: 2px solid #b4472e;
+  outline-offset: 1px;
+}
+
+/* 入力と結果の2列: 幅が足りなければ自動で縦に並べる。
+   サイドバーの開閉にも追従するよう、画面幅ではなく列の最小幅で判定する */
+.st-key-workspace > [data-testid="stLayoutWrapper"] > [data-testid="stHorizontalBlock"] > [data-testid="stColumn"] {
+  min-width: min(22rem, 100%);
+}
+
+/* 結果パネル: 背景から少し浮かせて、原稿用紙のように見せる */
+.st-key-result-panel {
+  /* 本文の高さ。パネル全体が画面に収まるよう、画面の高さから他の行の分を引いて計算する */
+  --version-nav-height: 0rem;
+  --quick-edits-height: 0rem;
+  --alert-height: 0rem;
+  --result-body-height: clamp(
+    15rem,
+    calc(100dvh - 24.5rem - var(--version-nav-height) - var(--quick-edits-height) - var(--alert-height)),
+    56rem
+  );
+  background-color: #ffffff;
+  box-shadow: 0 1px 3px rgba(35, 33, 29, 0.06), 0 8px 24px rgba(35, 33, 29, 0.05);
+}
+
+/* 入力欄が長いときも、スクロールに合わせて結果パネルを画面内に留める */
+.st-key-workspace [data-testid="stLayoutWrapper"]:has(> .st-key-result-panel) {
+  position: sticky;
+  top: 4rem;
+}
+
+/* 本文の高さ: st.container(height=...) は外側のラッパーにも height と flex で高さを指定するので、両方を上書きする */
+div.st-key-result-body,
+div.st-key-result-copy,
+div.st-key-result-plain,
+div.st-key-stream-body {
+  height: var(--result-body-height);
+}
+
+[data-testid="stLayoutWrapper"]:has(> .st-key-result-body),
+[data-testid="stLayoutWrapper"]:has(> .st-key-result-copy),
+[data-testid="stLayoutWrapper"]:has(> .st-key-result-plain),
+[data-testid="stLayoutWrapper"]:has(> .st-key-stream-body) {
+  height: var(--result-body-height);
+  flex: 0 0 var(--result-body-height);
+}
+
+/* 行が増えるときは、その分だけ本文を低くする */
+.st-key-result-panel:has(.st-key-version-nav) {
+  --version-nav-height: 3.5rem;
+}
+
+.st-key-result-panel:has(.st-key-quick-edits) {
+  --quick-edits-height: 3rem;
+}
+
+.st-key-result-panel:has([data-testid="stAlert"]) {
+  --alert-height: 5.5rem;
+}
+
+/* よく使う修正指示: 主役の入力欄より控えめな、小さな丸いボタンにする */
+.st-key-quick-edits button {
+  min-height: 2rem;
+  padding: 0.125rem 0.75rem;
+  border-radius: 999px;
+}
+
+.st-key-quick-edits button p {
+  font-size: 0.8125rem;
+}
+
+/* 版の説明: 長い修正指示は 1 行に省略し、両端のボタンの位置を保つ */
+.st-key-version-nav [data-testid="stElementContainer"]:has([data-testid="stText"]) {
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+.st-key-version-nav [data-testid="stText"] span {
+  display: block;
+  overflow: hidden;
+  color: #6f695d;
+  font-size: 0.875rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* 結果の見出し行: 文字数を見出しの隣に置き、保存ボタンを右端へ寄せる */
+.st-key-result-head [data-testid="stCaptionContainer"] {
+  flex: 1 1 auto;
+  width: auto;
+}
+
+/* 生成された文章: パネルの幅に合わせた大きさと、日本語向けの行間にする */
+.st-key-result-body h1,
+.st-key-stream-body h1 {
+  font-size: 1.5rem;
+}
+
+.st-key-result-body h2,
+.st-key-stream-body h2 {
+  font-size: 1.2rem;
+}
+
+.st-key-result-body h3,
+.st-key-stream-body h3 {
+  font-size: 1.05rem;
+}
+
+.st-key-result-body p,
+.st-key-result-body li,
+.st-key-stream-body p,
+.st-key-stream-body li {
+  line-height: 1.85;
+}
+
+.st-key-result-body blockquote,
+.st-key-stream-body blockquote {
+  border-left-color: #b4472e;
+}
+
+/* 結果がまだないときの案内: 結果が出てもパネルの大きさがなるべく変わらないようにする */
+div.st-key-result-empty {
+  min-height: calc(var(--result-body-height) + 11.625rem);
+  justify-content: center;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.st-key-result-empty p {
+  text-align: center;
+  color: #6f695d;
+}
+
+.st-key-result-empty [role="img"] {
+  font-size: 2.5rem;
+  color: #c9bfab;
+}
